@@ -1,4 +1,4 @@
-package com.mtuci.vki.main.item
+package com.mtuci.vki.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,14 +24,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.request.ImageRequest
+import com.google.accompanist.coil.rememberCoilPainter
+import com.mtuci.vki.model.ProductDTO
 
 @Composable
-fun GoodItemView(item: GoodItem){
+fun ProductView(product: ProductDTO){
     Column(
         modifier = Modifier
             .padding(vertical = 2.dp)
@@ -43,7 +47,10 @@ fun GoodItemView(item: GoodItem){
             .padding(vertical = 12.dp, horizontal = 25.dp)
         ) {
             Image(
-                painter = painterResource(id = item.thumbnail),
+                painter = rememberCoilPainter(
+                    request = ImageRequest.Builder(LocalContext.current).crossfade(true)
+                        .data(product.thumbnail).build()
+                ),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -58,26 +65,25 @@ fun GoodItemView(item: GoodItem){
                     .padding(start = 15.dp)
             ) {
                 Text(
-                    text = item.price.toString() + "$",
+                    text = product.price.toString() + "$",
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(top = 1.dp)
+                    fontSize = 16.sp
                 )
                 Text(
-                    text = item.title,
+                    text = product.title,
                     fontSize = 14.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = item.description,
+                    text = product.description,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = 13.sp,
                     lineHeight = 20.sp
                 )
                 Text(
-                    text = "Stock: " + item.stock,
+                    text = "Stock: " + product.stock,
                     fontSize = 13.sp,
                     color = Color.Gray
                 )
@@ -90,7 +96,7 @@ fun GoodItemView(item: GoodItem){
                     )
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
-                        text = item.rating.toString(),
+                        text = product.rating.toString(),
                         fontSize = 15.sp
                     )
                 }

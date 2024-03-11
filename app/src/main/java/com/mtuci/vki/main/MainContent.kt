@@ -16,12 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mtuci.vki.main.item.GoodItem
-import com.mtuci.vki.main.item.GoodItemView
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
+import com.mtuci.vki.model.ProductDTO
 
 @Composable
 fun MainContent(
-    goods: List<GoodItem>
+    pagingData: LazyPagingItems<ProductDTO>
 ){
     Column(
         modifier = Modifier
@@ -47,8 +49,10 @@ fun MainContent(
             LazyColumn(
                 modifier = Modifier.fillMaxHeight()
             ){
-                items(items = goods){good ->
-                    GoodItemView(item = good)
+                items(pagingData){
+                    it?.let { 
+                        ProductView(product = it)
+                    }
                 }
             }
         }
