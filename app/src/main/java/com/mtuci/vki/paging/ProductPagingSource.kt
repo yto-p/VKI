@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.mtuci.vki.api.ApiClient
 import com.mtuci.vki.api.ApiService
 import com.mtuci.vki.model.ProductDTO
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -20,6 +21,7 @@ class ProductPagingSource : PagingSource<Int, ProductDTO>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductDTO> {
         val position = params.key ?: 1
         return try {
+            delay(2000)
             val remoteDate = ApiClient.apiService.getProductList(position, params.loadSize)
             val nextKey = if (remoteDate.products.isEmpty()){
                 null
