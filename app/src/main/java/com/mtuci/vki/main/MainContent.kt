@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -37,7 +40,7 @@ fun MainContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .statusBarsPadding()
+            .safeDrawingPadding()
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,7 +59,8 @@ fun MainContent(
             modifier = Modifier.fillMaxSize()
         ){
             LazyColumn(
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier
+                    .fillMaxHeight()
             ){
                 if (pagingData.loadState.refresh is LoadState.Loading){
                     item {

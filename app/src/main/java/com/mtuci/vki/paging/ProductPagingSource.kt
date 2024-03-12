@@ -19,19 +19,19 @@ class ProductPagingSource : PagingSource<Int, ProductDTO>() {
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductDTO> {
-        val position = params.key ?: 1
+        val position = params.key ?: 0
         return try {
+            // delay to visualize pagination
             delay(2000)
             val remoteDate = ApiClient.apiService.getProductList(position, params.loadSize)
             val nextKey = if (remoteDate.products.isEmpty()){
                 null
             } else {
-                position + 1
+                position + remoteDate.products.size
             }
-            val prevKey = if (position == 1) null else position - 1
             LoadResult.Page(
                 data = remoteDate.products,
-                prevKey = prevKey,
+                prevKey = null,
                 nextKey = nextKey
             )
 
